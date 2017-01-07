@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @post.name %>
+</p>
+
+<%= link_to 'Edit', edit_post_path(@post) %> |
+<%= link_to 'Back', posts_path %>
+
+
+
+<br/>
+<p>Comments</p>
+<br/>
+<textarea id="new_comment"></textarea>
+<br/>
+<input id="save_comment" type="submit" value="Enviar">
+<br/>
+
+<table>
+  <thead>
+    <tr>
+      <th>Message</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @comments.each do |c| %>
+      <tr>
+        <td><%= c.post.id.to_s+' - '+c.message %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<script type="text/javascript">
+	$("#save_comment").on("click", function (){
+		var url = "<%= create_comment_path %>"
+		var post_id = <%= @post.id %>
+		var msg = $("#new_comment").val()
+
+		$.post(url, {message: msg, post_id: post_id})
+	})
+</script>
